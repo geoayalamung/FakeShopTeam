@@ -21,18 +21,27 @@ class ProductItem{
     constructor(product){
         this.product = product;
     }
-    addToCart(){
-        shoppingCart.addProduct(this.product);
-        console.log(this.product);
+  addToCart() {
+       ShoppingCart.addProduct(this.product);
+        console.log(product);
     }
-    render(){
-        const li = document.createElement('li');
-        list.innerHTML = ` img src = "${this.product.image}" alt = "${this.product.tittle}"/>
+  render(){
+    return 
+    `<li>
+       img src = "${this.product.image}" alt = "${this.product.tittle}"/>
         <h3>${this.product.tittle}</h3>
         <p>Price: $$this.product.price}</p>
         <p>${this.product.description}</p>
-        <button onclick = "addToCart(this.id)">Add to cart</button>`;
-        return li;
+        <button onClick = "productItem.addToCart()">Add to cart</button>
+        </li>`;
+  }
     }
-    
-}
+  const productTest = new Product(0,"Test Product", 100, "This is a test", "Test.jpg"); 
+  const productTest1 = new Product(1, "Test Product2", 200, "This is another test","test.jpg");
+
+  console.log(productTest1);
+
+  const productItem = new ProductItem(productTest);
+  console.log(productItem.render());
+  productItem.addToCart();
+
