@@ -34,4 +34,5 @@ class ProductItem{
         <button onclick = "addToCart(this.id)">Add to cart</button>`;
         return li;
     }
+    
 }
