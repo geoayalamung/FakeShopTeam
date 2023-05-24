@@ -20,7 +20,7 @@ const productList = {
 class ProductList{
     constructor(){
         this.products = [];
-
+        
 }
 async fetchProducts(){
     try{
