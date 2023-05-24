@@ -22,3 +22,4 @@ class Product {
     const productTest = new Product(0, "Test Product", 100, "This is a test", "test.jpg");
     const productTest1 = new Product(1, "Test Product2", 200, "This is another test", "test.jpg");
   console.log(productTest1);
+  console.log(productTest);
