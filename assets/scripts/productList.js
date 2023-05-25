@@ -1,45 +1,56 @@
 //Contiene la definición de la clase "ProductList".
-/* ### Step 3 - Product List
 
-Create a class called `ProductList` that will have the following properties:
+class ProductItem {
+  constructor(product) {
+    this.product = product;
+  }
 
-```js
-const productList = {
-  products: [],
-  fetchProducts: function () {
-    // fetch the products from the API
-  },
+  addToCart() {
+    console.log(this.product);
+  }
+
   render() {
-    // render the products by looping through the products array and create a new ProductItem instance for each product. Use render method of ProductItem class to get each product element and append it to the `<ul>`.
-  },
-};
-```
-
-> API to be used: https://fakestoreapi.com/products */
-
-class ProductList{
-    constructor(){
-        this.products = [];
-
+    const liElement = document.createElement('li');
+    liElement.innerHTML = `
+      <img src="${this.product.image}" alt="${this.product.title}">
+      <h3>${this.product.title}</h3>
+      <p>${this.product.price}</p>
+      <p>${this.product.description}</p>
+      <button onclick="productList.products[0].addToCart()">Add to Cart</button>
+    `;
+    return liElement;
+  }
 }
-async fetchProducts(){
-    try{
-        const response = await fetch('https://fakestoreapi.com/products');
-        const data = await response.json();
-        this.products = data.map((item) =>{
-            return new Product(item.id, item.title, item.price);
+
+class ProductList {
+  constructor() {
+    this.products = [];
+  }
+
+  fetchProducts() {
+    fetch('https://fakestoreapi.com/products')
+        .then(response => response.json())
+        .then(data => {
+          this.products = data;
+          this.render();
+        })
+        .catch(error => {
+          console.error('Error fetching products:', error);
         });
-        this.render();
-        }catch(error){
-            console.log(error);
-    }
+  }
+
+  render() {
+    const ulElement = document.createElement('ul');
+
+    this.products.forEach(product => {
+      const productItem = new ProductItem(product);
+      const liElement = productItem.render();
+      ulElement.appendChild(liElement);
+    });
+
+    document.body.appendChild(ulElement);
+  }
 }
-render(){
-    const ul = document.createElement('ul');
-    this.products.forEach((product) => {
-        const productItem =new ProductItem(product);
-        ul.appendChild(productItem.render());
-});
-document.body.appendChild(ul);
-}
-}
+
+const productList = new ProductList();
+productList.fetchProducts();
