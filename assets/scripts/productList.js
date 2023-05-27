@@ -1,6 +1,6 @@
 //Contiene la definición de la clase "ProductList".
 
-class ProductItem {
+/* class ProductItem {
   constructor(product) {
     this.product = product;
   }
@@ -54,3 +54,4 @@ class ProductList {
 
 const productList = new ProductList();
 productList.fetchProducts();
+ */
