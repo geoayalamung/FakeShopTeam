@@ -1,5 +1,62 @@
 //Contiene la definición de la clase App y es el punto de entrada de la aplicación.
 
+var productContainer = document.getElementById("prod-list");
+
+fetch("https://fakestoreapi.com/products")
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+
+    data.forEach(function(product) {
+      var listItem = document.createElement("li");
+      listItem.className = "product-item";
+
+      var itemContainer = document.createElement("div");
+
+      var image = document.createElement("img");
+      image.src = product.image;
+      image.alt = product.title;
+
+     
+      image.classList.add("myClass");
+
+     
+      image.style.width = "200px";
+      image.style.height = "200px";
+
+
+      var content = document.createElement("div");
+      content.className = "product-item__content";
+
+      var title = document.createElement("h2");
+      title.textContent = product.title;
+
+      var price = document.createElement("h3");
+      price.textContent = "$" + product.price;
+
+      var description = document.createElement("p");
+      description.textContent = product.description;
+
+      var button = document.createElement("button");
+      button.textContent = "Add to Cart";
+
+      content.appendChild(title);
+      content.appendChild(price);
+      content.appendChild(description);
+      content.appendChild(button);
+
+      itemContainer.appendChild(image);
+      itemContainer.appendChild(content);
+
+      listItem.appendChild(itemContainer);
+      productContainer.appendChild(listItem);
+    });
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
 const cart = [];
 
 var products ={
@@ -16,7 +73,6 @@ var products ={
       price: 89.99,
       description: "A carpet which you might like - or not.",
     },
-   /* Creo que debemos agregar los productos de las APIS */
   ],
 
   addToCart: function (productId) {
@@ -30,6 +86,7 @@ var products ={
     }
   },
 };
+
 
 var addToCartButtons = document.querySelectorAll(".product-item button");
 
