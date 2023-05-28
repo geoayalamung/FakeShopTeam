@@ -1,57 +1,54 @@
-//Contiene la definición de la clase "ProductList".
+const productContainer = document.getElementById("prod-list");
 
-/* class ProductItem {
-  constructor(product) {
-    this.product = product;
-  }
+fetch("https://fakestoreapi.com/products")
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    data.forEach(function(product) {
+      var listItem = document.createElement("li");
+      listItem.className = "product-item";
 
-  addToCart() {
-    console.log(this.product);
-  }
+      var itemContainer = document.createElement("div");
+      itemContainer.className = "product-item__container";
 
-  render() {
-    const liElement = document.createElement('li');
-    liElement.innerHTML = `
-      <img src="${this.product.image}" alt="${this.product.title}">
-      <h3>${this.product.title}</h3>
-      <p>${this.product.price}</p>
-      <p>${this.product.description}</p>
-      <button onclick="productList.products[0].addToCart()">Add to Cart</button>
-    `;
-    return liElement;
-  }
-}
+      var image = document.createElement("img");
+      image.src = product.image;
+      image.alt = product.title;
 
-class ProductList {
-  constructor() {
-    this.products = [];
-  }
+      image.classList.add("product-item__image");
 
-  fetchProducts() {
-    fetch('https://fakestoreapi.com/products')
-        .then(response => response.json())
-        .then(data => {
-          this.products = data;
-          this.render();
-        })
-        .catch(error => {
-          console.error('Error fetching products:', error);
-        });
-  }
+      var content = document.createElement("div");
+      content.className = "product-item__content";
 
-  render() {
-    const ulElement = document.createElement('ul');
+      var title = document.createElement("h2");
+      title.textContent = product.title;
 
-    this.products.forEach(product => {
-      const productItem = new ProductItem(product);
-      const liElement = productItem.render();
-      ulElement.appendChild(liElement);
+      var price = document.createElement("h3");
+      price.textContent = "$" + product.price;
+
+      var description = document.createElement("p");
+      description.textContent = product.description;
+
+      var button = document.createElement("button");
+      button.textContent = "Add to Cart";
+
+      content.appendChild(title);
+      content.appendChild(price);
+      content.appendChild(description);
+      content.appendChild(button);
+
+      itemContainer.appendChild(image);
+      itemContainer.appendChild(content);
+
+      listItem.appendChild(itemContainer);
+      productContainer.appendChild(listItem);
+
+      button.addEventListener("click", function() {
+        products.addToCart(product.id);
+      });
     });
-
-    document.body.appendChild(ulElement);
-  }
-}
-
-const productList = new ProductList();
-productList.fetchProducts();
- */
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
